@@ -207,7 +207,7 @@ class Stock extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      stock_no: "",
+      stock_no: this.props.no,
       list_type: "1_month",
       open: true,
       open2: false,
@@ -237,6 +237,7 @@ class Stock extends Component {
     this.handleChange_type = this.handleChange_type.bind(this); //日期區間(type)
   }
 
+  //挑選股票代碼(編輯過程中)
   handleChange_no_edit(value) {
     var url = "/getStock/list/" + value;
     instance.get(url).then(response => {
@@ -252,6 +253,7 @@ class Stock extends Component {
     });
   }
 
+  //挑選股票代碼(完成挑選後)
   async handleChange_no(event) {
     // event.target 是當前的 DOM elment
     // 從 event.target.value 取得 user 剛輸入的值
@@ -265,6 +267,7 @@ class Stock extends Component {
     this.setState(state => ({ favorited: chkfvrt }));
   }
 
+  //改變區間
   handleChange_type = key => (event, value) => {
     this.state.list_type = value;
     this.handleChange_show_chart(this.props.name);

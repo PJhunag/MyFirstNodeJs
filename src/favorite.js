@@ -84,7 +84,7 @@ export async function checkFavorite(account, stock_no) {
     return chk;
 }
 
-export async function getFavoriteCards(account) {
+export async function getFavoriteCards(account,toStockPrices) {
     console.log('getFavorite!')
 
     //取得我的最愛清單資訊
@@ -125,7 +125,7 @@ export async function getFavoriteCards(account) {
         var newStock =
             <GridListTile>
                 <Card >
-                    <CardActionArea className="card">
+                    <CardActionArea className="card" focusVisible={toStockPrices(list[i].id)} >
                         <CardContent className="card">
                             <Typography variant="display1" color="textSecondary" >
                                 {list[i].name}  <font size="5">({list[i].id})</font>
