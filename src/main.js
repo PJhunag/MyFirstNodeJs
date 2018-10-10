@@ -32,7 +32,7 @@ class Main extends Component {
     super()
     this.state = {
       open: true,
-      open2: false, 
+      open2: false,
       open3: false,
       choice_name: 'getStockPrices', //stockPrices,tradingVolume
       choice_desc: '股票收盤價紀錄',
@@ -41,6 +41,7 @@ class Main extends Component {
       show_favorite: false, //顯示我的最愛
       favorite: <div>favorite</div>,
       no: "",
+      desc: "",
     }
     this.handleChange_getMyFavorite = this.handleChange_getMyFavorite.bind(this); //favorite
     this.handleChange_fromFavoriteToStockPrices = this.handleChange_fromFavoriteToStockPrices.bind(this); //click favorite
@@ -63,43 +64,43 @@ class Main extends Component {
 
   handleChange_getStockPrices = () => {
     //呼叫並且刷新主要區塊(右下)
-    this.setState(state => ({choice_name:'getStockPrices',choice_desc:'股票收盤價紀錄',show_stock:true,show_favorite:false}));
-    this.setState(state => ({show_stock:true,show_favorite:false}));
+    this.setState(state => ({ choice_name: 'getStockPrices', choice_desc: '股票收盤價紀錄', show_stock: true, show_favorite: false }));
+    this.setState(state => ({ show_stock: true, show_favorite: false }));
 
   }
 
   handleChange_getTradingVolume = () => {
     //呼叫並且刷新主要區塊(右下)
-    this.setState(state => ({choice_name:'getTradingVolume',choice_desc:'股票成交量紀錄',show_stock:true,show_favorite:false}));
-    this.setState(state => ({show_stock:true,show_favorite:false}));
+    this.setState(state => ({ choice_name: 'getTradingVolume', choice_desc: '股票成交量紀錄', show_stock: true, show_favorite: false }));
+    this.setState(state => ({ show_stock: true, show_favorite: false }));
   }
 
-  async handleChange_getMyFavorite(){
+  async handleChange_getMyFavorite() {
     //呼叫並且刷新主要區塊(右下)
     //顯示我的最愛區塊
     //隱藏其他區塊
-    var fvrt = await getFvrt.getFavoriteCards(this.state.user,this.handleChange_fromFavoriteToStockPrices);
-    this.setState(state => ({show_stock:false,show_favorite:true,favorite:fvrt}));
+    var fvrt = await getFvrt.getFavoriteCards(this.state.user, this.handleChange_fromFavoriteToStockPrices);
+    this.setState(state => ({ show_stock: false, show_favorite: true, favorite: fvrt }));
 
   }
 
   //從我的最愛挑選要顯示資訊的股票
-  handleChange_fromFavoriteToStockPrices(choice_no){
+  handleChange_fromFavoriteToStockPrices(stock) {
 
-    console.log('test:'+choice_no)
+    // console.log('即將開啟(' + no+')股票資訊!')
     //指定no
-    this.setState(state => ({no:choice_no}));
-
+    this.setState(state => ({ no: stock.id }));
+    this.setState(state => ({ desc: stock.name }));
     //刷新股票資訊
     this.handleChange_getStockPrices();
   }
 
   //設置使用者
   setUser = user_id => {
-    this.setState(state => ({user:user_id}));
-    console.log("this.state.user:"+this.state.user)
+    this.setState(state => ({ user: user_id }));
+    console.log("this.state.user:" + this.state.user)
   }
-  
+
   render() {
     const { classes } = this.props;
     return (
@@ -210,9 +211,8 @@ class Main extends Component {
           </Collapse>
         </div>
 
-        {this.state.show_stock && <Stock name={this.state.choice_name} desc={this.state.choice_desc} user={this.state.user} no={this.state.no}/>}
+        {this.state.show_stock && <Stock name={this.state.choice_name} desc={this.state.choice_desc} user={this.state.user} stock_no={this.state.no} stock_desc={this.state.desc} />}
         {this.state.show_favorite && this.state.favorite}
-
       </div>
     )
   }

@@ -51,8 +51,8 @@ var line_chart_list = {
   }]
 };
 
-//預設action 
-var stock_no = "";
+var stock_no = "None"; //股票代碼
+var stock_desc = "None"; //股票說明
 
 //取得股票清單
 var stock_list = [];
@@ -218,6 +218,7 @@ class Stock extends Component {
       favorited: false, //是否添加至我的最愛
     }
 
+
     var url = "/getStock/list/ALL";
     instance.get(url).then(response => {
       var data = response.data;
@@ -235,6 +236,15 @@ class Stock extends Component {
     this.handleChange_show_chart = this.handleChange_show_chart.bind(this);
     this.handleChange_no_edit = this.handleChange_no_edit.bind(this); //下拉搜尋(編輯中)
     this.handleChange_type = this.handleChange_type.bind(this); //日期區間(type)
+
+    //有外部預帶值, 帶出對應股票
+    if (this.props.stock_no != "") {
+      stock_no = this.props.stock_no;
+      stock_desc = this.props.stock_desc;
+      var chkfvrt = getFavotie.checkFavorite(this.props.user, stock_no);
+      this.state.favorited = chkfvrt; //檢核是否已加入我的最愛
+      this.handleChange_show_chart(this.props.name);
+    }
   }
 
   //挑選股票代碼(編輯過程中)
@@ -260,7 +270,7 @@ class Stock extends Component {
     // 將 user 輸入的值更新回 state
     stock_no = event.label;
     this.handleChange_show_chart(this.props.name); //顯示圖表
-    var chkfvrt = await getFavotie.checkFavorite(this.props.user,stock_no);
+    var chkfvrt = await getFavotie.checkFavorite(this.props.user, stock_no);
     this.state.favorited = chkfvrt; //檢核是否已加入我的最愛
     //console.log("this.state.favorited:"+this.state.favorited)
     //console.log("chkfcrt:"+chkfvrt+",type"+typeof(chkfvrt))
@@ -335,7 +345,7 @@ class Stock extends Component {
 
   //改變收藏狀態
   setFavorite = (event, checked) => {
-    if (this.props.user === "None") { 
+    if (this.props.user === "None") {
       //判斷是否已登入
       this.setState(state => ({ msg_open: true, favorited: false, msg: "請先登入系統後再重新添加至我的最愛!" }));
     }
@@ -366,8 +376,7 @@ class Stock extends Component {
         <div className='search'><div className='search'>
           <font face="微軟正黑體" size="8"><b> {this.props.desc} </b></font>
           <p />
-          請挑選要查詢的股票代碼 :
-              <Select
+          <Select
             classes={classes}
             options={stock_list}
             components={components}
@@ -378,8 +387,6 @@ class Stock extends Component {
             onInputChange={this.handleChange_no_edit}
             native="true"
           />
-          <FormControlLabel control={<Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} checked={this.state.favorited} />}
-            label="收藏" onChange={this.setFavorite} />
           <p />
           查詢區間
             <Grid item xs={12}>
@@ -395,7 +402,12 @@ class Stock extends Component {
             </FormControl>
           </Grid>
           <hr />
-          <p>目前挑選的股票代碼為:{stock_no}</p>
+          <p>
+            <font face="微軟正黑體" size="6">目前顯示的股票代碼為：{stock_no} </font>
+            <font face="微軟正黑體" size="4">({stock_desc}) &nbsp;&nbsp;&nbsp;&nbsp;</font>
+            <FormControlLabel control={<Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} checked={this.state.favorited} />}
+              label="收藏" onChange={this.setFavorite} />
+          </p>
           <p />
           <hr />
         </div></div>
