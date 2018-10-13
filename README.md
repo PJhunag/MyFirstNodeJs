@@ -24,7 +24,7 @@
             <h1>前端
                 <br>
             </h1>
-            <p>使用React js開發介面</p>
+            <p>技術:React js (echarts, material-ui) </p>
             <p> index.js (首頁)
                 <br>
             </p>
