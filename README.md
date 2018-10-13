@@ -47,7 +47,7 @@
             <h1>後端
                 <br>
             </h1>
-            <p>使用Node js開發後端Server，提供RESTful API接口提供使用</p>
+            <p>使用Node js開發後端Server，提供RESTful API接口供前端呼叫</p>
             <p>．backend\Server.js
                 <br>
             </p>
