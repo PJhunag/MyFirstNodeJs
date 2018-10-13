@@ -24,20 +24,20 @@
             <h1>前端
                 <br>
             </h1>
-            <p>技術:React js (echarts, material-ui) </p>
-            <p> index.js (首頁)
+            <p>React js (echarts, material-ui) </p>
+            <p>index.js (首頁)
                 <br>
             </p>
-            <p> index.css account.js (帳號)
+            <p>．index.css account.js (帳號)
                 <br>
             </p>
-            <p>favorite.js (我的最愛)
+            <p>．favorite.js (我的最愛)
                 <br>
             </p>
-            <p>getStockInfo.js (串接後端取得資訊)
+            <p>．getStockInfo.js (串接後端取得資訊)
                 <br>
             </p>
-            <p>main.js (主頁面) registerServiceWorker.js
+            <p>．main.js (主頁面) registerServiceWorker.js
                 <br>
             </p>
             <p>stock.js (股票頁面)</p>
@@ -57,10 +57,10 @@
             <h1>爬蟲
                 <br>
             </h1>
-            <p>使用Node js開發爬蟲工具，包含twse上市股票及tpex上櫃股票，抓取完成後寫入mysql資料庫待用</p>
-            <p> crawler\crawler_range.js(區間抓取)</p>
-            <p>crawler\crawler_today.js(當日抓取)</p>
-            <p> crawler\read_web.js(爬蟲本體)</p>
+            <p>Node js開發爬蟲工具，包含twse上市股票及tpex上櫃股票，抓取完成後寫入mysql資料庫待用</p>
+            <p>．crawler\crawler_range.js(區間抓取)</p>
+            <p>．crawler\crawler_today.js(當日抓取)</p>
+            <p>．crawler\read_web.js(爬蟲本體)</p>
         </div>
     </div>
 </div>
