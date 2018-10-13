@@ -40,7 +40,7 @@
             <p>．main.js (主頁面) registerServiceWorker.js
                 <br>
             </p>
-            <p>stock.js (股票頁面)</p>
+            <p>．stock.js (股票頁面)</p>
         </div>
         <div class="col-sm-4 item">
             <hr>
