@@ -24,7 +24,7 @@
             <h1>前端
                 <br>
             </h1>
-            <p>React js (echarts, material-ui) </p>
+            <p>使用React js (圖表：echarts, 介面：material-ui) </p>
             <p>．index.js index.css (首頁)
                 <br>
             </p>
