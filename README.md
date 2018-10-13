@@ -25,10 +25,10 @@
                 <br>
             </h1>
             <p>React js (echarts, material-ui) </p>
-            <p>index.js (首頁)
+            <p>．index.js index.css (首頁)
                 <br>
             </p>
-            <p>．index.css account.js (帳號)
+            <p>．account.js (帳號)
                 <br>
             </p>
             <p>．favorite.js (我的最愛)
@@ -48,7 +48,7 @@
                 <br>
             </h1>
             <p>使用Node js開發後端Server，提供RESTful API接口提供使用</p>
-            <p>backend\Server.js
+            <p>．backend\Server.js
                 <br>
             </p>
         </div>
