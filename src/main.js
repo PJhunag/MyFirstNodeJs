@@ -17,6 +17,8 @@ import Collapse from '@material-ui/core/Collapse';
 import List from '@material-ui/core/List';
 import Toolbar from '@material-ui/core/Toolbar';
 import AppBar from '@material-ui/core/AppBar';
+import Headroom from 'react-headroom';
+
 
 //Module variable
 const styles = theme => ({
@@ -42,9 +44,11 @@ class Main extends Component {
       favorite: <div>favorite</div>,
       no: "",
       desc: "",
+      show_title: true, //顯示title
     }
     this.handleChange_getMyFavorite = this.handleChange_getMyFavorite.bind(this); //favorite
     this.handleChange_fromFavoriteToStockPrices = this.handleChange_fromFavoriteToStockPrices.bind(this); //click favorite
+    this.handleChange_wheel = this.handleChange_wheel.bind(this); //wheel
   }
 
   //下拉展開(股票資訊)
@@ -101,20 +105,60 @@ class Main extends Component {
     console.log("this.state.user:" + this.state.user)
   }
 
+  //控制是否顯示title
+  handleChange_wheel(event) {
+    /*     var delta = event.deltaY;
+        console.log(delta)
+        if (delta == "100") {
+          //往下滾動, 隱藏選單
+          //this.setState(state => ({ show_title:false}));
+          $('title').removeClass('header-down').addClass('header-up');
+        }
+        else {
+          //往上滾動, 顯示選單
+          //this.setState(state => ({ show_title:true}));
+          $('title').removeClass('header-up').addClass('header-down');
+        } */
+
+    var header = new Headroom(document.querySelector("#header"), {
+      tolerance: 5,
+      offset: 205,
+      classes: {
+        initial: "animated",
+        pinned: "slideDown",
+        unpinned: "slideUp"
+      }
+    });
+    header.init();
+
+    var bttHeadroom = new Headroom(document.getElementById("btt"), {
+      tolerance: 0,
+      offset: 500,
+      classes: {
+        initial: "slide",
+        pinned: "slide--reset",
+        unpinned: "slide--down"
+      }
+    });
+    bttHeadroom.init();
+  }
+
   render() {
     const { classes } = this.props;
     return (
-      <div>
-        <div className='top'>
-          <AppBar position="static">
-            <Toolbar>
-              <Typography variant="title" color="inherit" className={classes.flex}>
-                <font className='title' face="微軟正黑體" size="8"><b>股票查詢</b></font><font className='title' face="微軟正黑體" size="3"><b>T.H</b></font>
-              </Typography>
-              <Account setUser={this.setUser} />
-            </Toolbar>
-          </AppBar>
-        </div>
+      <div >
+        <Headroom>
+          <div className='top' onWheel={(e) => this.handleChange_wheel(e)} >
+            <AppBar classname="title" position="static">
+              <Toolbar>
+                <Typography variant="title" color="inherit" className={classes.flex}>
+                  <font className='title' face="微軟正黑體" size="8"><b>股票查詢</b></font><font className='title' face="微軟正黑體" size="3"><b>T.H</b></font>
+                </Typography>
+                <Account setUser={this.setUser} />
+              </Toolbar>
+            </AppBar>
+          </div>
+        </Headroom>
         <div className='menu'>
           <ListItem button onClick={this.expand_option}>
             <ListItemIcon>
@@ -145,17 +189,17 @@ class Main extends Component {
                 <ListItemIcon>
                   <SearchIcon />
                 </ListItemIcon>
-                <ListItemText inset primary="KD線查歷史紀錄" />
+                <ListItemText inset primary="排行榜" />
               </ListItem>
             </List>
-            <List className="sub_button" component="div" disablePadding>
+{/*             <List className="sub_button" component="div" disablePadding>
               <ListItem button onClick={this.handleClick}>
                 <ListItemIcon>
                   <SearchIcon marginLeft="5%" />
                 </ListItemIcon>
                 <ListItemText inset primary="月營收歷史紀錄" />
               </ListItem>
-            </List>
+            </List> */}
           </Collapse>
 
           <ListItem button onClick={this.expand_option2}>

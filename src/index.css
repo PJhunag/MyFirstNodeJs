@@ -58,3 +58,6 @@ background-color: #FFFFFF;
   height: 250px;
   background-color: rgb(116, 158, 241);
 }
+.title{
+  transition: top 0.5s ease-in-out;
+}
