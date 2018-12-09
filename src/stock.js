@@ -253,7 +253,7 @@ class Stock extends Component {
     instance.get(url).then(response => {
       var data = response.data;
       var ls_stock_list = new Array()
-      console.log(data);
+      console.log("edit:" + data);
       for (var i = 0; i < data.length; i++) {
         console.log(data[i].id + "(" + data[i].name + ")");
         ls_stock_list[i] = { label: data[i].id + "(" + data[i].name + ")" };
@@ -269,6 +269,9 @@ class Stock extends Component {
     // 從 event.target.value 取得 user 剛輸入的值
     // 將 user 輸入的值更新回 state
     stock_no = event.label;
+    stock_desc = stock_no.substr(stock_no.indexOf("(") + 1, stock_no.indexOf(")")-stock_no.indexOf("(")-1)
+    //console.log("stock_desc:"+stock_no+"-")
+    //console.log("stock_desc:"+stock_desc+"-")
     this.handleChange_show_chart(this.props.name); //顯示圖表
     var chkfvrt = await getFavotie.checkFavorite(this.props.user, stock_no);
     this.state.favorited = chkfvrt; //檢核是否已加入我的最愛

@@ -185,11 +185,11 @@ class Main extends Component {
               </ListItem>
             </List>
             <List className="sub_button" component="div" disablePadding>
-              <ListItem button onClick={this.handleClick}>
+              <ListItem button onClick={this.handleChange_getTop10}>
                 <ListItemIcon>
                   <SearchIcon />
                 </ListItemIcon>
-                <ListItemText inset primary="排行榜" />
+                <ListItemText inset primary="交易量排行榜" />
               </ListItem>
             </List>
 {/*             <List className="sub_button" component="div" disablePadding>
