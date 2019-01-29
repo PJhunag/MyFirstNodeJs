@@ -9,6 +9,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import NewWindow from 'react-new-window'
 
 //var account = require('./account.js')
 var CryptoJS = require("crypto-js");
@@ -222,6 +223,83 @@ class Account extends Component {
         this.setState(state => ({ register_open: true }));
     };
 
+    //開啟登入窗(google)
+    register_open_google = () => {
+        //開啟google第三方登入
+        // for google oauth
+        var google_client_id = "448812857469-7bkri2f82fjp8uiohjdidelaat8thgc8.apps.googleusercontent.com";
+        var google_secret_id = "t_cHvnpqIW7zz1SYx4FI34ny";
+        var google_callback_url = "http://localhost:8000/google_login/callback";
+        var google_oauth_url = "https://accounts.google.com/o/oauth2/v2/auth?" +
+            //Scope可以參考文件裡各式各樣的scope，可以貼scope url或是個別命名
+            "scope=email%20profile&" +
+            "redirect_uri=" + google_callback_url + "&" +
+            "response_type=code&" +
+            "client_id=" + google_client_id;
+
+        window.location.replace(google_oauth_url)
+
+/*         console.log("google_oauth_url:" + google_oauth_url);
+        var login = window.open(google_oauth_url, 'newwindow', 'height=600,width=600,top=200,left=500,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no, status=no, location=no, modal=yes,');
+        var returnValue = window.showModalDialog(google_oauth_url, window); */
+
+
+        /* 
+                
+                var google_client_id = "448812857469-7bkri2f82fjp8uiohjdidelaat8thgc8.apps.googleusercontent.com";
+                var google_callback_url = "http://localhost:8000/google_login/callback";
+                var google_oauth_url = "https://accounts.google.com/o/oauth2/v2/auth?" +
+                    //Scope可以參考文件裡各式各樣的scope，可以貼scope url或是個別命名
+                    "scope=email%20profile&" +
+                    "redirect_uri=" + google_callback_url + "&" +
+                    "response_type=code&" +
+                    "client_id=" + google_client_id;
+                var oauth2Endpoint = 'https://accounts.google.com/o/oauth2/v2/auth';
+        
+                // Create <form> element to submit parameters to OAuth 2.0 endpoint.
+                var form = document.createElement('form');
+                form.setAttribute('method', 'GET'); // Send as a GET request.
+                form.setAttribute('action', oauth2Endpoint);
+        
+                // Parameters to pass to OAuth 2.0 endpoint.
+                var params = {
+                    'client_id': google_client_id,
+                    'redirect_uri': google_callback_url,
+                    'response_type': 'token',
+                    'scope': 'profile',
+                    'include_granted_scopes': 'true',
+                    'state': 'pass-through value'
+                };
+        
+                // Add form parameters as hidden input values.
+                for (var p in params) {
+                    var input = document.createElement('input');
+                    input.setAttribute('type', 'hidden');
+                    input.setAttribute('name', p);
+                    input.setAttribute('value', params[p]);
+                    form.appendChild(input);  
+        
+                };
+        
+                // Add form to page and submit it to open the OAuth 2.0 endpoint.
+                document.body.appendChild(form);
+                console.log("form"+form);
+                form.submit();
+         */
+    }
+
+    //開啟登入窗(google)
+    register_open_facebook = () => {
+        //開啟google第三方登入
+        // for google oauth
+        var facebook_client_id = "1129004447267178";
+        var facebook_oauth_url = "https://www.facebook.com/dialog/oauth?redirect_uri=" +
+            "http://localhost:8000/facebook_login/callback&" +
+            "client_id=" + facebook_client_id + "&scope=public_profile&response_type=code";
+
+        window.location.replace(facebook_oauth_url)
+    };
+
 
     //確認註冊
     async register_accept() {
@@ -318,6 +396,8 @@ class Account extends Component {
                         </DialogContent>
                         <DialogActions>
                             <Button onClick={this.register_open} color="primary">註冊新帳號</Button>
+                            <Button onClick={this.register_open_google} color="primary">註冊新帳號(google)</Button>
+                            <Button onClick={this.register_open_facebook} color="primary">註冊新帳號(FACEBOOK)</Button>
                             <Button onClick={this.login_cancel} color="primary">放棄</Button>
                             <Button onClick={this.login_accept} color="primary">確認</Button>
                         </DialogActions>

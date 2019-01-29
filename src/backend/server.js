@@ -623,3 +623,147 @@ function msgdecoder(encryptedBase64Str) {
     return decryptedStr;
 
 }
+
+app.get('/google_login', function (request, response) { //以google帳號登入
+    console.log("Request:google_login");
+
+    var google_client_id = "448812857469-7bkri2f82fjp8uiohjdidelaat8thgc8.apps.googleusercontent.com";
+    var google_secret_id = "t_cHvnpqIW7zz1SYx4FI34ny";
+    var google_callback_url = "http://localhost:8000/google_login/callback";
+
+    //組合登入URL
+    var google_oauth_url = "https://accounts.google.com/o/oauth2/v2/auth?" +
+        //Scope可以參考文件裡各式各樣的scope，可以貼scope url或是個別命名
+        "scope=email%20profile&" +
+        "redirect_uri=" + google_callback_url + "&" +
+        "response_type=code&" +
+        "client_id=" + google_client_id;
+
+    //返回登入URL
+    response.end(google_oauth_url);
+
+})
+
+app.get('/google_login/callback', function (request, response) { //以google帳號登入(callback)
+    console.log("Request:google_login-callback");
+
+    var rtn_url =
+        "<!DOCTYPE html>                                                                                        " +
+        "<html>                                                                                                 " +
+        "<head>                                                                                                 " +
+        "    <meta http-equiv='refresh' content='5;url=http://localhost:3000?google_login' />               " +
+        "</head>                                                                                                " +
+        "<body>                                                                                                 " +
+        "wuchi" +
+        "</body>                                                                                                " +
+        "</html>                                                                                                "
+
+    //拿code換token
+    var google_client_id = "448812857469-7bkri2f82fjp8uiohjdidelaat8thgc8.apps.googleusercontent.com";
+    var google_secret_id = "t_cHvnpqIW7zz1SYx4FI34ny";
+    var google_callback_url = "http://localhost:8000/google_login/callback";
+    var google_code = request.query.code;
+    console.log("google_client_id:" + google_client_id);
+    console.log("google_secret_id:" + google_secret_id);
+    console.log("google_callback_url:" + google_callback_url);
+    console.log("google_code:" + google_code);
+
+    var token_option = {
+        url: "https://www.googleapis.com/oauth2/v4/token",
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        form: {
+            code: google_code,
+            client_id: google_client_id,
+            client_secret: google_secret_id,
+            grant_type: "authorization_code",
+            //要跟Google Console裡填的一樣喔
+            redirect_uri: google_callback_url
+        }
+    };
+    var request = require('request');
+    request(token_option, function (err, res, body) {
+        var access_token = JSON.parse(body).access_token;
+        console.log("access_token:" + access_token)
+        var info_option = {
+            url: "https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=" + access_token,
+            method: "GET",
+        };
+        request(info_option, function (err, res, body) {
+            var mail = JSON.parse(body).email;
+            console.log("email:" + mail)
+
+        })
+    })
+
+    response.end(rtn_url);
+})
+
+app.get('/facebook_login', function (request, response) { //以facebook帳號登入
+    console.log("Request:facebook_login");
+
+    var facebook_client_id = "1129004447267178";
+    var facebook_oauth_url = "https://www.facebook.com/dialog/oauth?redirect_uri=" +
+        "http://localhost:8000/facebook_login/callback&" +
+        "client_id=" + facebook_client_id + "&scope=public_profile&response_type=code";
+
+    //返回登入URL
+    response.end(facebook_oauth_url);
+})
+
+app.get('/facebook_login/callback', function (request, response) { //以facebook帳號登入(callback)
+    console.log("Request:facebook_login-callback");
+
+
+    var rtn_url =
+        "<!DOCTYPE html>                                                                                        " +
+        "<html>                                                                                                 " +
+        "<head>                                                                                                 " +
+        "    <meta http-equiv='refresh' content='5;url=http://localhost:3000?facebook_login' />               " +
+        "</head>                                                                                                " +
+        "<body>                                                                                                 " +
+        "wuchi" +
+        "</body>                                                                                                " +
+        "</html>                                                                                                "
+
+    //拿code換token
+    var facebook_client_id = "448812857469-7bkri2f82fjp8uiohjdidelaat8thgc8.apps.googleusercontent.com";
+    var facebook_secret_id = "t_cHvnpqIW7zz1SYx4FI34ny";
+    var facebook_callback_url = "http://localhost:8000/google_login/callback";
+    var facebook_code = request.query.code;
+    console.log("facebook_client_id:" + facebook_client_id);
+    console.log("facebook_secret_id:" + facebook_secret_id);
+    console.log("facebook_callback_url:" + facebook_callback_url);
+    console.log("facebook_code:" + facebook_code);
+
+    response.end(rtn_url);
+    /* 
+        var token_option = {
+            url: "https://www.googleapis.com/oauth2/v4/token",
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            form: {
+                code: google_code,
+                client_id: google_client_id,
+                client_secret: google_secret_id,
+                grant_type: "authorization_code",
+                //要跟Google Console裡填的一樣喔
+                redirect_uri: google_callback_url
+            }
+        };
+        var request = require('request');
+        request(token_option, function (err, res, body) {
+            var access_token = JSON.parse(body).access_token;
+            console.log("access_token:"+access_token)
+            var info_option = {
+                url: "https://www.googleapis.com/oauth2/v1/userinfo?" + "access_token=" + access_token,
+                method: "GET",
+            };
+        }) */
+
+
+})
