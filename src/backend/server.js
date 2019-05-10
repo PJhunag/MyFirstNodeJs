@@ -651,7 +651,7 @@ app.get('/google_login/callback', function (request, response) { //以google帳�
         "<!DOCTYPE html>                                                                                        " +
         "<html>                                                                                                 " +
         "<head>                                                                                                 " +
-        "    <meta http-equiv='refresh' content='5;url=http://localhost:3000?google_login' />               " +
+        "    <meta http-equiv='refresh' content='0;url=http://localhost:3000?google_login' />               " +
         "</head>                                                                                                " +
         "<body>                                                                                                 " +
         "wuchi" +
